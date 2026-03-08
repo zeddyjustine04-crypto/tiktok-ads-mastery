@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TikTok Ads Mastery — From Zero to Scaling Machine</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --color: #FF2D55;
+    --bg: #0A0A0F;
+  }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,45,85,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,45,85,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #glow-blob {
+    position: fixed;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    transition: background 0.6s ease;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* Header */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,45,85,0.1);
+    border: 1px solid rgba(255,45,85,0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    margin-bottom: 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: #FF2D55;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  h1 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  h1 span {
+    transition: color 0.4s;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.4);
+    max-width: 480px;
+    font-family: 'Space Mono', monospace;
+    line-height: 1.65;
+    margin-bottom: 48px;
+  }
+
+  /* Stage Nav */
+  .stage-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .stage-btn {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 10px 18px;
+    cursor: pointer;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stage-btn.active {
+    color: #fff;
+  }
+
+  .stage-btn .prog-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: rgba(255,255,255,0.5);
+    transition: width 0.3s;
+  }
+
+  .prog-badge {
+    margin-left: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 100px;
+    padding: 2px 7px;
+    font-size: 11px;
+  }
+
+  /* Main Card */
+  .card {
+    border-radius: 24px;
+    overflow: hidden;
+    transition: border-color 0.4s, box-shadow 0.4s;
+  }
+
+  .card-header {
+    padding: 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+    transition: background 0.4s;
+  }
+
+  .stage-label {
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.15em;
+    margin-bottom: 4px;
+  }
+
+  .card-title {
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  .card-subtitle {
+    color: rgba(255,255,255,0.5);
+    font-size: 15px;
+    margin-top: 4px;
+  }
+
+  .mindset-box {
+    border-radius: 16px;
+    padding: 16px 20px;
+    max-width: 340px;
+    transition: background 0.4s, border-color 0.4s;
+  }
+
+  .mindset-label {
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .mindset-text {
+    font-size: 13px;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.75);
+    font-style: italic;
+  }
+
+  /* Tabs */
+  .tab-nav {
+    display: flex;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 0 32px;
+    background: rgba(255,255,255,0.02);
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgba(255,255,255,0.35);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 16px 18px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    margin-bottom: -1px;
+    white-space: nowrap;
+  }
+
+  .tab-btn.active {
+    border-bottom-color: var(--color);
+  }
+
+  .tab-content {
+    padding: 32px;
+  }
+
+  .section-label {
+    color: rgba(255,255,255,0.35);
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+  }
+
+  /* Concepts */
+  .concept-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .concept-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    animation: fadeUp 0.3s ease both;
+  }
+
+  .concept-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .concept-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.55;
+  }
+
+  /* Resources */
+  .resources {
+    margin-top: 28px;
+  }
+
+  .resource-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 100px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .resource-link:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+  }
+
+  /* Tasks */
+  .progress-track {
+    background: rgba(255,255,255,0.06);
+    border-radius: 100px;
+    height: 4px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 0.4s ease;
+  }
+
+  .task-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.03);
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .task-item:hover {
+    border-color: rgba(255,255,255,0.12);
+  }
+
+  .task-item.done {
+    background: rgba(255,45,85,0.07);
+  }
+
+  .task-check {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 11px;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .task-item.done .task-check {
+    border-color: var(--color);
+    background: var(--color);
+  }
+
+  .task-text {
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.8);
+    transition: all 0.2s;
+  }
+
+  .task-item.done .task-text {
+    color: rgba(255,255,255,0.35);
+    text-decoration: line-through;
+  }
+
+  /* Shortcuts */
+  .shortcut-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .shortcut-item {
+    padding: 18px 22px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left-width: 3px;
+    border-radius: 0 12px 12px 0;
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+    animation: fadeUp 0.3s ease both;
+  }
+
+  /* Simulation */
+  .sim-card {
+    border-radius: 20px;
+    padding: 32px;
+    transition: background 0.4s, border-color 0.4s;
+  }
+
+  .sim-tag {
+    display: inline-block;
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  .sim-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .sim-desc {
+    font-size: 15px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .sim-why {
+    margin-top: 24px;
+    padding: 16px;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .sim-why-label {
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .sim-why-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+
+  /* Bottom nav */
+  .bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    gap: 12px;
+  }
+
+  .nav-btn {
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+
+  .nav-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  .nav-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+  }
+
+  .nav-btn.prev {
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.7);
+  }
+
+  .nav-btn.next {
+    color: #fff;
+    border: none;
+    transition: all 0.2s;
+  }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 48px;
+    color: rgba(255,255,255,0.12);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeUp 0.3s ease; }
+
+  .header-icon-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .tasks-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .tasks-count {
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+  }
+</style>
+</head>
+<body>
+
+<div id="glow-blob"></div>
+
+<div class="wrap">
+  <!-- Header -->
+  <div>
+    <div class="badge">⚡ TIKTOK ADS MASTERY</div>
+    <h1>From Zero to<br><span id="h1-accent">Scaling Machine</span></h1>
+    <p class="subtitle">A battle-tested apprenticeship curriculum. 5 stages. Real assignments. No fluff.</p>
+  </div>
+
+  <!-- Stage Nav -->
+  <div class="stage-nav" id="stage-nav"></div>
+
+  <!-- Main Card -->
+  <div class="card" id="main-card" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,45,85,0.2);">
+    <!-- Card Header -->
+    <div class="card-header" id="card-header">
+      <div>
+        <div class="header-icon-row">
+          <span id="stage-icon" style="font-size:36px"></span>
+          <div>
+            <div class="stage-label" id="stage-label"></div>
+            <div class="card-title" id="card-title"></div>
+          </div>
+        </div>
+        <div class="card-subtitle" id="card-subtitle"></div>
+      </div>
+      <div class="mindset-box" id="mindset-box">
+        <div class="mindset-label" id="mindset-label">MINDSET UNLOCK</div>
+        <p class="mindset-text" id="mindset-text"></p>
+      </div>
+    </div>
+
+    <!-- Tab Nav -->
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="concepts">📚 Learn</button>
+      <button class="tab-btn" data-tab="tasks">✅ Do</button>
+      <button class="tab-btn" data-tab="shortcuts">⚡ Shortcuts</button>
+      <button class="tab-btn" data-tab="simulation">🎮 Simulate</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+
+      <div class="tab-panel active" id="tab-concepts">
+        <div class="section-label">WHAT YOU'LL MASTER</div>
+        <div class="concept-list" id="concept-list"></div>
+        <div class="resources">
+          <div class="section-label">RECOMMENDED RESOURCES</div>
+          <div class="resource-links" id="resource-links"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-tasks">
+        <div class="tasks-meta">
+          <div class="section-label" style="margin:0">REAL-WORLD ASSIGNMENTS</div>
+          <div class="tasks-count" id="tasks-count"></div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="task-list" id="task-list"></div>
+      </div>
+
+      <div class="tab-panel" id="tab-shortcuts">
+        <div class="section-label">INSIDER SHORTCUTS</div>
+        <div class="shortcut-list" id="shortcut-list"></div>
+      </div>
+
+      <div class="tab-panel" id="tab-simulation">
+        <div class="section-label">PRACTICE SIMULATION</div>
+        <div class="sim-card" id="sim-card">
+          <div class="sim-tag" id="sim-tag"></div>
+          <div class="sim-title" id="sim-title"></div>
+          <p class="sim-desc" id="sim-desc"></p>
+          <div class="sim-why">
+            <div class="sim-why-label">WHY THIS WORKS</div>
+            <p class="sim-why-text">This simulation forces you to engage with real market signals — not theory. Every stage is designed so that the next lesson makes more sense because you've experienced the friction firsthand.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <button class="nav-btn prev" id="btn-prev" onclick="changeStage(-1)">← Previous Stage</button>
+    <button class="nav-btn next" id="btn-next" onclick="changeStage(1)">Next Stage →</button>
+  </div>
+
+  <div class="footer-note">CHECK OFF TASKS AS YOU COMPLETE THEM · EVERY STAGE UNLOCKS WITH REAL-WORLD REPS</div>
+</div>
+
+<script>
+const curriculum = [
+  {
+    stage: 1,
+    title: "Foundation",
+    subtitle: "Understand the battlefield",
+    color: "#FF2D55",
+    icon: "⚡",
+    duration: "Week 1–2",
+    mindset: "You can't win a game you don't understand. Before spending $1, you must think like TikTok.",
+    concepts: [
+      "How TikTok's algorithm actually works (For You Page logic)",
+      "Why TikTok ads differ from Meta/Google ads fundamentally",
+      "The 3-second hook rule — attention is the only currency",
+      "TikTok ad formats: In-Feed, TopView, Spark Ads, Branded Hashtag",
+      "Understanding CPM, CPC, CTR, CVR, ROAS — your scorecard",
+      "The TikTok creative mindset: Native > Polished"
+    ],
+    tasks: [
+      "Spend 2 hours on TikTok. Scroll your For You Page — note EVERY ad. Screenshot 5 that stopped your thumb.",
+      "Open TikTok Ads Manager → explore 'Creative Center' → study top-performing ads in your niche",
+      "Write a 1-page 'Ad Autopsy' on 3 competitor ads: Hook, Build, CTA, Why it works",
+      "Set up your TikTok Business Account and Ads Manager (no spending yet)",
+      "Install TikTok Pixel on your website/store"
+    ],
+    resources: [
+      { label: "TikTok Creative Center (free spy tool)", url: "https://ads.tiktok.com/business/creativecenter" },
+      { label: "TikTok Business Learning Center", url: "https://www.tiktok.com/business/en/blog" }
+    ],
+    shortcuts: [
+      "🔥 Use TikTok's own 'Top Ads' filter in Creative Center — it's a free spy tool most beginners ignore",
+      "🔥 Search '[your niche] + ad' on TikTok to see what's already working",
+      "🔥 Follow accounts: @themarketingmillennial, @socialmediamindset for daily inspo"
+    ],
+    simulation: {
+      title: "The 3-Second Audit",
+      desc: "Watch 20 TikTok ads with your thumb hovering over the screen. Every time you'd scroll past, pause and ask: 'What would make me stay?' Write down 5 hooks that would have stopped YOU. This is your first swipe file."
+    }
+  },
+  {
+    stage: 2,
+    title: "Creative Craft",
+    subtitle: "Make content that converts",
+    color: "#FF6B00",
+    icon: "🎬",
+    duration: "Week 2–4",
+    mindset: "On TikTok, creativity IS the targeting. The right video finds the right person. Your job is to make the best 15 seconds of your customer's day.",
+    concepts: [
+      "The Hook → Problem → Solution → CTA framework",
+      "Pattern interrupts: visual, audio, and text-based",
+      "UGC (User Generated Content) vs. branded content — when to use each",
+      "The 'Scroll-Stopper' technique: first frame is everything",
+      "Voiceover vs. talking head vs. text-only formats",
+      "Music selection and trending audio strategy",
+      "Caption psychology and CTA placement"
+    ],
+    tasks: [
+      "Write 10 different hooks for ONE product. Then test them mentally against your target customer.",
+      "Film a 15-second raw UGC-style ad on your phone. No editing apps. Just authenticity.",
+      "Recreate a top-performing ad from Creative Center, but for your product/brand",
+      "Build a 'Hook Bank' — a Google Doc with 50 hooks organized by format (question, bold claim, story, shock)",
+      "Create 3 ad variations: talking head, text-overlay only, and product demo"
+    ],
+    resources: [
+      { label: "CapCut — free TikTok editing tool", url: "https://www.capcut.com" },
+      { label: "Epidemic Sound for licensed music", url: "https://www.epidemicsound.com" },
+      { label: "Motion Array for templates", url: "https://motionarray.com" }
+    ],
+    shortcuts: [
+      "🔥 The #1 performing hook format right now: 'POV: [relatable problem]'",
+      "🔥 Use trending audio within 3 days of it peaking — early movers get boosted",
+      "🔥 Don't shoot 4K. Shoot 1080p vertical — TikTok compresses 4K anyway",
+      "🔥 The 'ugly ad' principle: raw, shaky, authentic often outperforms studio-shot content 3:1"
+    ],
+    simulation: {
+      title: "The 10-Hook Challenge",
+      desc: "Pick ONE product (yours or a brand you admire). In 20 minutes, write 10 completely different hooks for the same product. Then rank them 1–10 based on how curious they'd make YOU. The top 3 are your first creative briefs."
+    }
+  },
+  {
+    stage: 3,
+    title: "Targeting & Structure",
+    subtitle: "Get in front of the right eyes",
+    color: "#7B2FBE",
+    icon: "🎯",
+    duration: "Week 3–5",
+    mindset: "Targeting on TikTok is counterintuitive — the algorithm is smarter than you. Your job is to give it the right signals, not micromanage it.",
+    concepts: [
+      "Campaign structure: Campaign → Ad Group → Ad",
+      "Broad vs. Interest targeting — why broad often wins on TikTok",
+      "Custom Audiences and Lookalikes — when to use them",
+      "Pixel events: View Content, Add to Cart, Purchase — setting them up correctly",
+      "Budget: Daily vs. Lifetime budgets and bid strategies",
+      "ACO (Automated Creative Optimization) — let TikTok do the heavy lifting",
+      "Geographic and demographic targeting nuances"
+    ],
+    tasks: [
+      "Build your first campaign structure on paper before touching Ads Manager",
+      "Set up 3 ad groups: 1 broad, 1 interest-based, 1 lookalike — same creative",
+      "Define your customer avatar in writing: age, pain points, content they watch, brands they love",
+      "Set up TikTok Pixel and verify it's firing correctly on key pages",
+      "Launch your first $20/day test campaign (this is your tuition)"
+    ],
+    resources: [
+      { label: "TikTok Ads Manager Guide (official)", url: "https://ads.tiktok.com/help" },
+      { label: "Pixel Helper Chrome Extension", url: "https://chromewebstore.google.com" }
+    ],
+    shortcuts: [
+      "🔥 Start with broad targeting + strong creative — let the pixel learn who converts",
+      "🔥 Minimum $50/day budget per ad group for the algorithm to exit 'learning phase' faster",
+      "🔥 Don't touch campaigns in the first 3 days — you'll break the learning phase",
+      "🔥 Use 'Smart Performance Campaigns' for first-time ROAS learning"
+    ],
+    simulation: {
+      title: "The Avatar Deep-Dive",
+      desc: "Open TikTok. Search your product category. Spend 30 minutes reading the COMMENTS on viral organic videos. Write down: exact words people use, frustrations they mention, what they're dreaming of. This is your ad copy, straight from your customer's mouth."
+    }
+  },
+  {
+    stage: 4,
+    title: "Testing & Iteration",
+    subtitle: "Data beats opinions",
+    color: "#0066FF",
+    icon: "🧪",
+    duration: "Week 4–7",
+    mindset: "You don't launch ads. You launch experiments. Every ad is a hypothesis. The market tells you what's true — your job is to listen.",
+    concepts: [
+      "A/B testing framework: what to test and in what order",
+      "Reading your dashboard: which metrics matter at each stage",
+      "The creative testing matrix: hooks × formats × offers",
+      "When to kill an ad vs. when to give it more time",
+      "Creative fatigue: how to spot it and what to do",
+      "Scaling signals: what metrics tell you to increase budget",
+      "Comment section mining for creative intelligence"
+    ],
+    tasks: [
+      "Run a 3-creative test: same targeting, 3 different hooks, $15/day each for 4 days",
+      "Build a testing tracker spreadsheet: ad name, hook, spend, CTR, CVR, ROAS, verdict",
+      "After Day 4, cut the bottom creative, double budget on winner, launch a new challenger",
+      "Read your ad comments daily — respond AND extract insights",
+      "Identify your first 'winning creative' — you'll recognize it by its CTR vs. the others"
+    ],
+    resources: [
+      { label: "Northbeam for multi-touch attribution", url: "https://www.northbeam.io" },
+      { label: "Triple Whale for ecom analytics", url: "https://www.triplewhale.com" }
+    ],
+    shortcuts: [
+      "🔥 CTR above 1.5% = creative is working. Below 0.8%? Kill it fast.",
+      "🔥 The 'winner stays' rule: never pause a profitable ad. Add new creatives instead.",
+      "🔥 Test hooks first, then offers, then formats — in that order",
+      "🔥 Day 3 data is directional. Day 7 data is decisive."
+    ],
+    simulation: {
+      title: "The $50 Lab",
+      desc: "Launch 3 ads for the same product with 3 completely different hooks. Spend $15–20 total per creative over 4 days. Track ONLY CTR and cost per link click for now. After Day 4, write a 1-paragraph 'verdict' on each. This is your first real market feedback loop."
+    }
+  },
+  {
+    stage: 5,
+    title: "Scaling & Mastery",
+    subtitle: "Turn winners into systems",
+    color: "#00B341",
+    icon: "🚀",
+    duration: "Week 7–12",
+    mindset: "Amateurs look for the perfect ad. Masters build systems that consistently produce winning ads. Scale is a byproduct of process.",
+    concepts: [
+      "Horizontal vs. vertical scaling strategies",
+      "CBO (Campaign Budget Optimization) vs. ABO — when to use each",
+      "Duplicating winning ad sets for scale without resetting learning",
+      "Building a Creative Production System: brief → shoot → edit → test → iterate",
+      "Retargeting funnels: warm audiences and multi-touch sequences",
+      "Offer testing: price points, bundles, guarantees",
+      "Seasonal and trend-based campaign planning",
+      "Building a creative team: how to brief UGC creators"
+    ],
+    tasks: [
+      "Build a 'Creative Brief Template' for briefing UGC creators or a video editor",
+      "Set up a 3-stage retargeting funnel: View → ATC → Non-purchaser",
+      "Duplicate your winning campaign at 2x budget (separate campaign, don't edit original)",
+      "Hire your first UGC creator on Billo, Fiverr, or Instagram DM",
+      "Create a weekly Creative Cadence: 2 new creatives tested every week, minimum"
+    ],
+    resources: [
+      { label: "Billo.app — UGC creator marketplace", url: "https://www.billo.app" },
+      { label: "Minea — competitor ad spy tool", url: "https://minea.com" },
+      { label: "AdSpy for creative research", url: "https://adspy.com" }
+    ],
+    shortcuts: [
+      "🔥 The fastest scale move: duplicate a winning ad group, increase budget 20% every 3 days",
+      "🔥 UGC ads from real customers cost $50–150 and often outperform $5K studio shoots",
+      "🔥 Retargeting your video viewers (50%+) is the cheapest high-converting audience you own",
+      "🔥 Build a swipe file of 100 winning ads. This becomes your creative team's bible."
+    ],
+    simulation: {
+      title: "The Scale Protocol",
+      desc: "Take your best-performing ad. Write 5 variations of the hook. Brief a UGC creator with a 1-page script. Run all 5 as a batch test. The one that wins becomes your 'control' creative — the benchmark every new ad must beat. This is how a scaling machine is built."
+    }
+  }
+];
+
+let activeStage = 0;
+let activeTab = 'concepts';
+let checkedTasks = JSON.parse(localStorage.getItem('ttChecked') || '{}');
+
+function saveChecked() {
+  localStorage.setItem('ttChecked', JSON.stringify(checkedTasks));
+}
+
+function getProgress(stageIdx) {
+  const tasks = curriculum[stageIdx].tasks;
+  const done = tasks.filter((_, i) => checkedTasks[`${stageIdx}-${i}`]).length;
+  return Math.round((done / tasks.length) * 100);
+}
+
+function setColor(color) {
+  document.documentElement.style.setProperty('--color', color);
+}
+
+function renderStageNav() {
+  const nav = document.getElementById('stage-nav');
+  nav.innerHTML = '';
+  curriculum.forEach((s, i) => {
+    const prog = getProgress(i);
+    const btn = document.createElement('button');
+    btn.className = 'stage-btn' + (i === activeStage ? ' active' : '');
+    btn.style.background = i === activeStage ? s.color : 'rgba(255,255,255,0.04)';
+    btn.style.borderColor = i === activeStage ? s.color : 'rgba(255,255,255,0.1)';
+    btn.style.color = i === activeStage ? '#fff' : 'rgba(255,255,255,0.5)';
+    btn.innerHTML = `${s.icon} Stage ${s.stage}${prog > 0 ? `<span class="prog-badge">${prog}%</span>` : ''}<div class="prog-bar" style="width:${prog}%"></div>`;
+    btn.onclick = () => { activeStage = i; activeTab = 'concepts'; render(); };
+    nav.appendChild(btn);
+  });
+}
+
+function renderHeader() {
+  const s = curriculum[activeStage];
+  setColor(s.color);
+  document.getElementById('h1-accent').style.color = s.color;
+  document.getElementById('h1-accent').textContent = 'Scaling Machine';
+  document.getElementById('glow-blob').style.background = `radial-gradient(circle, ${s.color}18 0%, transparent 70%)`;
+  document.getElementById('card-header').style.background = `linear-gradient(135deg, ${s.color}12, transparent)`;
+  document.getElementById('main-card').style.borderColor = `${s.color}30`;
+  document.getElementById('main-card').style.boxShadow = `0 0 60px ${s.color}10`;
+  document.getElementById('stage-icon').textContent = s.icon;
+  document.getElementById('stage-label').style.color = s.color;
+  document.getElementById('stage-label').textContent = `STAGE ${s.stage} · ${s.duration}`;
+  document.getElementById('card-title').textContent = s.title;
+  document.getElementById('card-subtitle').textContent = s.subtitle;
+  document.getElementById('mindset-box').style.background = `${s.color}15`;
+  document.getElementById('mindset-box').style.border = `1px solid ${s.color}30`;
+  document.getElementById('mindset-label').style.color = s.color;
+  document.getElementById('mindset-text').textContent = `"${s.mindset}"`;
+}
+
+function renderTabs() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === activeTab);
+    btn.style.color = btn.dataset.tab === activeTab ? 'var(--color)' : 'rgba(255,255,255,0.35)';
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(`tab-${activeTab}`).classList.add('active');
+}
+
+function renderConcepts() {
+  const s = curriculum[activeStage];
+  const list = document.getElementById('concept-list');
+  list.innerHTML = s.concepts.map((c, i) => `
+    <div class="concept-item" style="animation-delay:${i * 0.04}s">
+      <span class="concept-num" style="color:${s.color}">${String(i+1).padStart(2,'0')}</span>
+      <span class="concept-text">${c}</span>
+    </div>
+  `).join('');
+
+  const links = document.getElementById('resource-links');
+  links.innerHTML = s.resources.map(r => `
+    <a href="${r.url}" target="_blank" class="resource-link"
+      style="background:${s.color}18; border:1px solid ${s.color}35; color:${s.color}">
+      ↗ ${r.label}
+    </a>
+  `).join('');
+}
+
+function renderTasks() {
+  const s = curriculum[activeStage];
+  const prog = getProgress(activeStage);
+  document.getElementById('progress-fill').style.background = s.color;
+  document.getElementById('progress-fill').style.width = prog + '%';
+  const done = s.tasks.filter((_, i) => checkedTasks[`${activeStage}-${i}`]).length;
+  document.getElementById('tasks-count').style.color = s.color;
+  document.getElementById('tasks-count').textContent = `${done}/${s.tasks.length} complete`;
+
+  const list = document.getElementById('task-list');
+  list.innerHTML = s.tasks.map((t, i) => {
+    const key = `${activeStage}-${i}`;
+    const isDone = !!checkedTasks[key];
+    return `
+      <div class="task-item ${isDone ? 'done' : ''}" style="${isDone ? `border-color:${s.color}40; background:${s.color}10` : ''}"
+        onclick="toggleTask(${activeStage}, ${i})">
+        <div class="task-check" style="${isDone ? `border-color:${s.color}; background:${s.color}` : ''}">
+          ${isDone ? '✓' : ''}
+        </div>
+        <span class="task-text">${t}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderShortcuts() {
+  const s = curriculum[activeStage];
+  document.getElementById('shortcut-list').innerHTML = s.shortcuts.map((sh, i) => `
+    <div class="shortcut-item" style="border-left-color:${s.color}; animation-delay:${i*0.05}s">${sh}</div>
+  `).join('');
+}
+
+function renderSimulation() {
+  const s = curriculum[activeStage];
+  document.getElementById('sim-card').style.background = `linear-gradient(135deg, ${s.color}15, ${s.color}05)`;
+  document.getElementById('sim-card').style.border = `1px solid ${s.color}40`;
+  document.getElementById('sim-tag').style.background = s.color;
+  document.getElementById('sim-tag').textContent = `🎮 SIMULATION · ${s.duration}`;
+  document.getElementById('sim-title').textContent = s.simulation.title;
+  document.getElementById('sim-desc').textContent = s.simulation.desc;
+}
+
+function renderBottomNav() {
+  const s = curriculum[activeStage];
+  const prev = document.getElementById('btn-prev');
+  const next = document.getElementById('btn-next');
+  prev.disabled = activeStage === 0;
+  next.disabled = activeStage === curriculum.length - 1;
+  next.style.background = activeStage === curriculum.length - 1 ? 'rgba(255,255,255,0.05)' : s.color;
+  next.style.color = activeStage === curriculum.length - 1 ? 'rgba(255,255,255,0.2)' : '#fff';
+  next.style.boxShadow = activeStage === curriculum.length - 1 ? 'none' : `0 4px 20px ${s.color}40`;
+}
+
+function toggleTask(stageIdx, taskIdx) {
+  const key = `${stageIdx}-${taskIdx}`;
+  checkedTasks[key] = !checkedTasks[key];
+  saveChecked();
+  renderTasks();
+  renderStageNav();
+}
+
+function changeStage(dir) {
+  const newStage = activeStage + dir;
+  if (newStage < 0 || newStage >= curriculum.length) return;
+  activeStage = newStage;
+  activeTab = 'concepts';
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function render() {
+  renderStageNav();
+  renderHeader();
+  renderTabs();
+  renderConcepts();
+  renderTasks();
+  renderShortcuts();
+  renderSimulation();
+  renderBottomNav();
+}
+
+// Tab buttons
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.onclick = () => { activeTab = btn.dataset.tab; render(); };
+});
+
+render();
+</script>
+</body>
+</html>
